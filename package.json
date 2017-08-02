@@ -1,0 +1,40 @@
+{
+  "name": "airportWeather",
+  "version": "0.0.1",
+  "description": "Show metar weather information for airports",
+  "keywords": [
+    "leaflet",
+    "map",
+    "metar",
+    "weather"
+  ],
+  "homepage": "https://github.com/penpendede/airportWeather",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/penpendede/airportWeather.git"
+  },
+  "author": {
+    "name": "Josef Schugt",
+    "email": "penpendede@mail.ru"
+  },
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "fs-extra": "^4.0.1",
+    "jsftp": "^2.0.0",
+    "papaparse": "^4.3.5",
+    "standard": "^10.0.2"
+  },
+  "scripts": {
+    "setup": "npm run geticao",
+    "geticao": "node ./scripts/getData.js"
+  },
+  "bugs": {
+    "url": "https://github.com/penpendede/airportWeather/issues"
+  },
+  "maintainers": [
+    {
+      "name": "penpendede",
+      "email": "penpendede@mail.ru"
+    }
+  ]
+}
