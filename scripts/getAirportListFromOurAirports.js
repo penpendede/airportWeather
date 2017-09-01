@@ -1,27 +1,55 @@
 let fs = require('fs-extra')
-let http = require('http')
+let https = require('http')
 let papaparse = require('papaparse')
 
 let config = {
   'local': {
-    'file': './data/countries.json'
+    'file': './data/airportDataFromOurAirports.json'
   },
   'remote': {
     'host': 'ourairports.com',
-    'path': '/data/countries.csv'
+    'path': '/data/airports.csv'
   }
 }
+// Format of data is as follows
+// id
+// ident
+// type
+// name
+// latitude_deg
+// longitude_deg
+// elevation_ft
+// continent
+// iso_country
+// iso_region
+// municipality
+// scheduled_service
+// gps_code
+// iata_code
+// local_code
+// home_link",
+// wikipedia_link
+// keywords
 
 let data = []
 
-http.get(config.remote).on('response', response => {
+https.get(config.remote).on('response', response => {
   response.on('data', chunk => data.push(chunk))
   response.on('end', () => {
     let header, parsed
     [header, ...parsed] = papaparse.parse(data.join(''), config.parseOptions).data
     let selector = {}
     let i = 0
-    for (let field of ['id', 'code', 'name', 'continent', 'wp', 'keywords']) {
+    for (let field of [
+      'id', 'identifier',
+      'type',
+      'latitude', 'longitude', 'elevation',
+      'continent', 'countryIso', 'regionIso', 'municipality',
+      'scheduledService',
+      'gpsCode', 'iataCode', 'localCode',
+      'homeLink', 'wikipediaLink', 'keywords'
+
+    ]) {
       selector[field] = i++
     }
     data = []
@@ -38,7 +66,7 @@ http.get(config.remote).on('response', response => {
         if (err) {
           throw err
         }
-        console.log('Wrote country file')
+        console.log('Wrote data fetched from ourAirports')
       })
     })
   })

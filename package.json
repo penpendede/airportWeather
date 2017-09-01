@@ -1,6 +1,6 @@
 {
   "name": "airportWeather",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Show metar weather information for airports",
   "keywords": [
     "leaflet",
@@ -25,9 +25,13 @@
     "standard": "^10.0.2"
   },
   "scripts": {
-    "setup": "npm run getCountries && npm run getIcaoCodes",
+    "fetchData": "npm run getAirportList && npm run getAdditionalData",
+    "getAdditionalData": "npm run getCountries && npm run getIcaoWithMetarAvailable",
+    "getAirportList": "npm run getAirportListFromOpenFlights && npm run getAirportListFromOurAirports",
+    "getAirportListFromOpenFlights": "node ./scripts/getAirportListFromOpenFlights.js",
+    "getAirportListFromOurAirports": "node ./scripts/getAirportListFromOurAirports.js",
     "getCountries": "node ./scripts/getCountries.js",
-    "getIcaoCodes": "node ./scripts/getIcaoCodes.js"
+    "getIcaoWithMetarAvailable": "node ./scripts/getIcaoWithMetarAvailable.js"
   },
   "bugs": {
     "url": "https://github.com/penpendede/airportWeather/issues"
@@ -39,3 +43,8 @@
     }
   ]
 }
+
+
+-rw-rw-r-- 1 jupp jupp 1617 Sep  1 21:46 getAirportListFromOurAirports.js
+-rw-rw-r-- 1 jupp jupp 1092 Sep  1 21:30 getCountries.js
+-rw-rw-r-- 1 jupp jupp  858 Sep  1 20:52 getIcaoWithMetarAvailable.js

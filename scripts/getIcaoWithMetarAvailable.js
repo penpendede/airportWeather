@@ -3,7 +3,7 @@ let fs = require('fs-extra')
 
 let config = {
   'local': {
-    'file': './data/icao.json'
+    'file': './data/IcaoWithMetarAvailable.json'
   },
   'remote': {
     'host': 'tgftp.nws.noaa.gov',
@@ -21,9 +21,9 @@ ftp.ls(config.remote.path, (err, res) => {
     throw err
   }
   let iataCodes =
-    res.map(entry => entry.name) // only file names
-      .filter(fileName => fileName.match(/^[A-Z][A-Z0-9]{3}\.TXT$/)) // that have the right form
-      .map(fileName => fileName.substring(0, 4)) // only use the ICAO code part
+    res.map(entry => entry.name)
+      .filter(fileName => fileName.match(/^.{4}\.TXT$/))
+      .map(fileName => fileName.substring(0, 4))
   if (iataCodes && Array.isArray(iataCodes) && iataCodes.length) {
     fs.ensureFile(config.local.file).then(() => {
       fs.writeFile(config.local.file, JSON.stringify(iataCodes), (err) => {
