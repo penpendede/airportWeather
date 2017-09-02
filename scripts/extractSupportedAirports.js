@@ -6,7 +6,7 @@ const icaoWithMetarAvailable = require('../data/icaoWithMetarAvailable')
 
 const config = {
   'local': {
-    'file': './data/supportedAirports.json'
+    'file': './data/supportedAirports.geojson'
   }
 }
 
@@ -63,7 +63,7 @@ knownAirportsWithMetarAvailable.forEach(icao => {
     !isNaN(airportDataForCurrentIcao.longitude) &&
     !isNaN(airportDataForCurrentIcao.latitude)) {
     knownAirportsWithCoordinatesWhereMetarIsAvailable.push({
-      'id': icao,
+      'icao': icao,
       'lon': airportDataForCurrentIcao.longitude,
       'lat': airportDataForCurrentIcao.latitude
     })
@@ -73,7 +73,9 @@ knownAirportsWithMetarAvailable.forEach(icao => {
 })
 
 if (airportsThatStillNeedCoordinates.length) {
+
   console.log('Searching coordinates in OurAirports data.')
+
   airportsThatStillNeedCoordinates.forEach(icao => {
     let airportDataForCurrentIcao = airportDataFromOurAirports.find(entry => {
       return (entry.gpsCode === icao) || (entry.identifier === icao)
@@ -82,7 +84,7 @@ if (airportsThatStillNeedCoordinates.length) {
       !isNaN(airportDataForCurrentIcao.longitude) &&
       !isNaN(airportDataForCurrentIcao.latitude)) {
       knownAirportsWithCoordinatesWhereMetarIsAvailable.push({
-        'id': icao,
+        'icao': icao,
         'lon': airportDataForCurrentIcao.longitude,
         'lat': airportDataForCurrentIcao.latitude
       })
@@ -90,19 +92,37 @@ if (airportsThatStillNeedCoordinates.length) {
   })
 }
 
-console.log('Writing the data that will be displayed on the map.')
+console.log('Building an array of geoJSON features')
 
-fs.ensureFile(config.local.file).then(() => {
-  fs.writeFile(config.local.file, JSON.stringify(
-    knownAirportsWithCoordinatesWhereMetarIsAvailable
-  ), (err) => {
-    if (err) {
-      throw err
+let geoJsonFeatures = []
+
+knownAirportsWithCoordinatesWhereMetarIsAvailable.forEach(airportData => {
+  geoJsonFeatures.push({
+    'type': 'Feature',
+    'geometry': {
+      'type': 'Point',
+      'coordinates': [
+        parseFloat(airportData.lon),
+        parseFloat(airportData.lat)
+      ]
+    },
+    'properties': {
+      'icao': airportData.icao
     }
-    console.log('Wrote data.')
-    console.log(`Number of supported airports: ${knownAirportsWithCoordinatesWhereMetarIsAvailable.length}`)
   })
 })
 
+console.log('Writing geoJSON data.')
+
+fs.ensureFile(config.local.file).then(() => {
+  fs.writeFile(config.local.file, JSON.stringify({
+    'type': 'FeatureCollection',
+    'features': geoJsonFeatures
+  }), (err) => {
+    if (err) {
+      throw err
+    }
+  })
+})
 
 console.log('DONE.')

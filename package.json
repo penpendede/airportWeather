@@ -43,5 +43,8 @@
       "name": "penpendede",
       "email": "penpendede@mail.ru"
     }
-  ]
+  ],
+  "dependencies": {
+    "leaflet": "^1.2.0"
+  }
 }

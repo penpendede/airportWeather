@@ -62,3 +62,6 @@ data
 
 # webstorm's .idea
 .idea
+
+# webpage (because content is generated)
+webpage

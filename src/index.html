@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>METAR data for airports</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./css/leaflet.css"/>
+    <script src="./js/leaflet.js"></script>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="map" style="display: block; width: 100%; height: 100%;"></div>
+
+<script>
+  var map = L.map('map').setView([50.865833, 7.142778], 8)
+
+  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map)
+
+  function processData(data) {
+    let airports = JSON.parse(data)
+    L.geoJSON(airports, {
+      onEachFeature: (feature, layer) => {
+        layer.bindPopup(feature.properties.icao)
+    }
+
+  }).addTo(map);
+  }
+
+  function handler() {
+    if(this.status == 200 && this.responseText != null) {
+      processData(this.responseText);
+    }
+  }
+
+  var client = new XMLHttpRequest();
+  client.onload = handler;
+  client.open("GET", "./data/airports.geojson");
+  client.send();
+
+</script>
+
+</body>
+</html>
