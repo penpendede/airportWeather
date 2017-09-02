@@ -22,7 +22,7 @@
     "fs-extra": "^4.0.1",
     "jsftp": "^2.0.0",
     "papaparse": "^4.3.5",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "scripts": {
     "setup": "npm run fetchData && npm run processData",
