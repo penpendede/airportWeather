@@ -1,8 +1,8 @@
-let fs = require('fs-extra')
-let https = require('https')
-let papaparse = require('papaparse')
+const fs = require('fs-extra')
+const https = require('https')
+const papaparse = require('papaparse')
 
-let config = {
+const config = {
   'local': {
     'file': './data/airportDataFromOpenFlights.json'
   },

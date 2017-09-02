@@ -1,8 +1,8 @@
-let fs = require('fs-extra')
-let http = require('http')
-let papaparse = require('papaparse')
+const fs = require('fs-extra')
+const http = require('http')
+const papaparse = require('papaparse')
 
-let config = {
+const config = {
   'local': {
     'file': './data/countries.json'
   },

@@ -1,8 +1,8 @@
-let fs = require('fs-extra')
-let https = require('http')
-let papaparse = require('papaparse')
+const fs = require('fs-extra')
+const https = require('http')
+const papaparse = require('papaparse')
 
-let config = {
+const config = {
   'local': {
     'file': './data/airportDataFromOurAirports.json'
   },
@@ -43,6 +43,7 @@ https.get(config.remote).on('response', response => {
     for (let field of [
       'id', 'identifier',
       'type',
+      'name',
       'latitude', 'longitude', 'elevation',
       'continent', 'countryIso', 'regionIso', 'municipality',
       'scheduledService',
