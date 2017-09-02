@@ -2,6 +2,8 @@
 
 Map to get METAR information for airports by clicking on them.
 
+![Screenshot](./screenshot.jpg)
+
 This project is in the prototype stage. It already has basic functionality but it's not yet for the masses :)
 
 Currently there are:
