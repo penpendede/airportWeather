@@ -1,6 +1,6 @@
 {
   "name": "airportWeather",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Show metar weather information for airports",
   "keywords": [
     "leaflet",
@@ -25,15 +25,19 @@
     "standard": "^10.0.3"
   },
   "scripts": {
+    "publish": "npm run setup && npm run makeWebsite",
     "setup": "npm run fetchData && npm run processData",
     "fetchData": "npm run getAirportList && npm run getAdditionalData",
     "getAdditionalData": "npm run getCountries && npm run getIcaoWithMetarAvailable",
     "getAirportList": "npm run getAirportListFromOpenFlights && npm run getAirportListFromOurAirports",
+
     "getAirportListFromOpenFlights": "node ./scripts/getAirportListFromOpenFlights.js",
     "getAirportListFromOurAirports": "node ./scripts/getAirportListFromOurAirports.js",
     "getCountries": "node ./scripts/getCountries.js",
     "getIcaoWithMetarAvailable": "node ./scripts/getIcaoWithMetarAvailable.js",
+    "makeWebsite": "node ./scripts/copyFilesToWebDirectory.js",
     "processData": "node ./scripts/extractSupportedAirports.js"
+
   },
   "bugs": {
     "url": "https://github.com/penpendede/airportWeather/issues"
