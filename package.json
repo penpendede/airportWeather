@@ -43,8 +43,3 @@
     }
   ]
 }
-
-
--rw-rw-r-- 1 jupp jupp 1617 Sep  1 21:46 getAirportListFromOurAirports.js
--rw-rw-r-- 1 jupp jupp 1092 Sep  1 21:30 getCountries.js
--rw-rw-r-- 1 jupp jupp  858 Sep  1 20:52 getIcaoWithMetarAvailable.js
