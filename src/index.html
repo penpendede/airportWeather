@@ -36,7 +36,11 @@
     let airports = JSON.parse(data)
     L.geoJSON(airports, {
       onEachFeature: (feature, layer) => {
-        layer.bindPopup(feature.properties.icao)
+        layer.bindPopup(
+          '<a href="http://tgftp.nws.noaa.gov/data/observations/metar/stations/' + feature.properties.icao + '.TXT" ' +
+          'target="_blank">show METAR for ' + feature.properties.icao + '</a> <br />' +
+          '(opens in new window)'
+        )
     }
 
   }).addTo(map);
