@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="./css/leaflet.css"/>
     <script src="./js/leaflet.js"></script>
+    <script src="./js/Leaflet.VectorGrid.js"></script>
 
     <style>
         body {
@@ -32,18 +33,23 @@
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map)
 
-  function processData(data) {
-    let airports = JSON.parse(data)
-    L.geoJSON(airports, {
-      onEachFeature: (feature, layer) => {
-        layer.bindPopup(
-          '<a href="http://tgftp.nws.noaa.gov/data/observations/metar/stations/' + feature.properties.icao + '.TXT" ' +
-          'target="_blank">show METAR for ' + feature.properties.icao + '</a> <br />' +
-          '(opens in new window)'
-        )
-    }
+  var popup = L.popup()
 
-  }).addTo(map);
+  function processData(data) {
+    var airports = JSON.parse(data)
+    var airportLayer = L.vectorGrid.slicer(airports, {
+      interactive: true
+    }).addTo(map);
+    airportLayer.on('click', function (e) {
+      var icao = e.layer.properties.icao
+      popup
+        .setContent(
+          '<a href="http://tgftp.nws.noaa.gov/data/observations/metar/stations/' + icao + '.TXT" ' +
+          'target="_blank">show METAR for ' + icao + '</a> <br />' +
+          '(opens in new window)')
+        .setLatLng([e.latlng.lat, e.latlng.lng])
+        .openOn(map)
+    })
   }
 
   function handler() {

@@ -8,6 +8,8 @@ fs.copySync('./node_modules/leaflet/dist/leaflet.css', './website/css/leaflet.cs
 fs.copySync('./node_modules/leaflet/dist/leaflet.js', './website/js/leaflet.js')
 fs.copySync('./node_modules/leaflet/dist/images', './website/css/images')
 
+fs.copySync('./node_modules/leaflet.vectorgrid/dist/Leaflet.VectorGrid.bundled.min.js', './website/js/Leaflet.VectorGrid.js')
+
 // copy page source
 fs.copySync('./src', './website')
 
