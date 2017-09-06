@@ -8,6 +8,7 @@ fs.copySync('./node_modules/leaflet/dist/leaflet.css', './website/css/leaflet.cs
 fs.copySync('./node_modules/leaflet/dist/leaflet.js', './website/js/leaflet.js')
 fs.copySync('./node_modules/leaflet/dist/images', './website/css/images')
 
+// copy leaflet.markercluster
 fs.copySync(
   './node_modules/leaflet.markercluster/dist/MarkerCluster.css',
   './website/css/MarkerCluster.css'
@@ -23,6 +24,9 @@ fs.copySync(
 
 // copy page source
 fs.copySync('./src', './website')
+
+// copy images
+fs.copySync('./images', './website/images')
 
 // copy airport list
 fs.copySync('./data/supportedAirports.geojson', './website/data/airports.geojson')
