@@ -24,10 +24,9 @@ named `website` containing a website displaying all the airports for which a loc
 the availability of METAR information has been confirmed (said METAR information may however be outdated).
 
 Due to browser security settings you will not be able to open the website using a `file://` url, it needs to be
-served by a web server. You don't have a web server at hand? Never mind, just issue `npm run serve`. It will start
-[http-server](https://www.npmjs.com/package/http-server) which will print the URL you can use to connect to it.
-Usually [http://localhost:8080](http://localhost:8080) will do the job. BTW: `http-server` also supports `https` - I tried it out, works fine. 
-
+served by a web server. This web server needs to PHP support because accessing
+(tgftp.nws.noaa.gov)[http://tgftp.nws.noaa.gov] qualifies as cross site scripting and hence requires a. The one I use
+is written in PHP because that's the language supported by most hosters.
 
 Anyway: Clicking on one of the markers opens a popup that currently just contains a link to the raw METAR data.
 
@@ -46,3 +45,8 @@ following diagram: The task names are verbose to make it obvious what the indivi
        │      └── processData
        └── makeWebsite
     
+# Licenses
+
+* for licenses of packages used see the corresponding `node_modules` subdirectories
+* for the proxy see [PROXY_LICENSE.txt](PROXY_LICENSE.txt) - the proxy I use is [PHP CORS Proxy](https://github.com/softius/php-cross-domain-proxy) by [Iacovos Constantinou](https://github.com/softius)
+* for the project's code see [LICENSE.txt](LICENSE.txt)
