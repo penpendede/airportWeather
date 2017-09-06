@@ -43,7 +43,17 @@
       var airports = JSON.parse(data)
       var markers = L.markerClusterGroup();
 
-      var geoJsonLayer = L.geoJson(airports);
+      var geoJsonLayer = L.geoJson(airports, {
+        'pointToLayer': function (feature, latlng) {
+          var smallIcon =  new L.Icon({
+            iconSize: [36, 64],
+            iconAnchor: [18, 64],
+            iconUrl: 'images/airport-marker.png'
+          });
+          return L.marker(latlng, {icon: smallIcon});
+        }
+      });
+
       markers.addLayer(geoJsonLayer);
       map.addLayer(markers);
 
