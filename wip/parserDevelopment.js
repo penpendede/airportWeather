@@ -1,5 +1,6 @@
 // Data for the most important airports in the word and those you typically use to reach the UN city of Bonn
 // The date provided by the server is discarded so I use the most important caesura in aviation history
+// For the time being only international METAR codes will be supported as my focus is on Afro-Eurasia.
 let metarExampleData = [
   'CYYZ 111246Z 26009KT 15SM SCT030 BKN081 BKN240 20/14 A2982 RMK CU3AC3CI1 SLP099 DENSITY ALT 1400FT',
   'EDDF 111246Z 17005KT 140V210 9999 FEW048TCU 19/08 Q1015 NOSIG',
@@ -62,43 +63,73 @@ let metarExampleData = [
   'ZPPP 111246Z 21002MPS 9999 SCT023 OVC040 19/17 Q1020 NOSIG',
   'ZSPD 111246Z 11005MPS 9999 FEW013 25/23 Q1012 NOSIG',
   'ZSSS 111246Z 11004MPS 080V140 CAVOK 26/22 Q1011 NOSIG',
-  'ZUUU 111246Z 24001MPS 7000 FEW050 23/22 Q1011 NOSIG',
+  'ZUUU 111246Z 24001MPS 7000 FEW050 23/22 Q1011 NOSIG'
 ]
 
-let formattedPressure = pressure => {
-  let value = parseInt(pressure.substr(1))
-  switch (pressure[0]) {
-    case 'Q':
-      return `${value} hPa`
-    case 'A':
-      return `${value * 0.01} inHg`
+function MetarData (metarString) {
+  this.metarString_ = metarString
+  let metar = metarString.split(/\s+/)
+  this.metarData_ = {
+    'pressure': metar.find(part => part.match(/^Q\d\d\d\d$/) || part.match(/^A\d\d\d\d$/)),
+    'tempAndDew': metar.find(part => part.match(/^M?\d\d\/M?\d\d$/)),
+    'visibility': metar.find(part => part.match(/^\d+$/)) // so far only ISO
+  }
+
+  this.getRawMetarData = function () {
+    return this.metarString_
+  }
+
+  this.getRawMetarParts = function () {
+    return this.metarData_
+  }
+
+  this.getPressureDescription = function () {
+    if (this.metarData_.pressure) {
+      let value = parseInt(this.metarData_.pressure.substr(1))
+      return (this.metarData_.pressure[0] === 'Q') ? `${value} hPa` : `${value * 0.01} inHg`
+    }
+  }
+
+  this.getTemperatureDescription = function () {
+    if (this.metarData_.tempAndDew) {
+      return this.metarData_.tempAndDew.match(/^(M?\d\d)/)[1].replace('M', '-') + ' °C'
+    }
+  }
+
+  this.getDewPointDescription = function () {
+    if (this.metarData_.tempAndDew) {
+      return this.metarData_.tempAndDew.match(/(M?\d\d)$/)[1].replace('M', '-') + ' °C'
+    }
+  }
+
+  this.getVisibilityDescription = function () {
+    if (this.metarData_.visibility) {
+      let visibility = parseInt(this.metarData_.visibility)
+      switch (visibility) {
+        case 9999:
+          return '10 km or more'
+        case 0:
+          return 'less than 50 m'
+        default:
+          if (visibility < 1000) {
+            return visibility + ' m'
+          } else {
+            visibility = this.metarData_.visibility
+            return visibility[0] + '.' + visibility.substring(1) + ' km'
+          }
+      }
+    }
   }
 }
-
-let formattedTemperature = tempAndDew => {
-  return tempAndDew.match(/^(M?\d\d)/)[1].replace('M', '-') + ' °C'
-}
-
-let formattedDewPoint = tempAndDew => {
-  return tempAndDew.match(/(M?\d\d)$/)[1].replace('M', '-') + ' °C'
-}
-
-let formattedVisibility = visibility => parseInt(visibility) + ' m'
 
 // That's a fake
 let data = '2001/09/11 08:46 \n' + metarExampleData[Math.floor(Math.random() * metarExampleData.length)]
 
-let dummy
-let metar
-[dummy, metar] = data.split('\n')
+let metarData = new MetarData(data.split('\n')[1])
 
-metar = metar.split(/\s+/)
-let pressure = metar.find(part => part.match(/^Q\d\d\d\d$/) || part.match(/^A\d\d\d\d$/))
-let tempAndDew = metar.find(part => part.match(/^M?\d\d\/M?\d\d$/))
-let visibility = metar.find(part => part.match(/^\d+$/))
-
-console.log(metar)
-console.log('Pressure:    ' + formattedPressure(pressure))
-console.log('Temperature: ' + formattedTemperature(tempAndDew))
-console.log('Dew Point:   ' + formattedDewPoint(tempAndDew))
-console.log('Visibility:  ' + formattedVisibility(visibility))
+console.log(metarData.getRawMetarData())
+console.log(metarData.getRawMetarParts())
+console.log('Pressure:    ' + metarData.getPressureDescription())
+console.log('Temperature: ' + metarData.getTemperatureDescription())
+console.log('Dew Point:   ' + metarData.getDewPointDescription())
+console.log('Visibility:  ' + metarData.getVisibilityDescription())
