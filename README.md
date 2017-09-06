@@ -25,7 +25,7 @@ the availability of METAR information has been confirmed (said METAR information
 
 Due to browser security settings you will not be able to open the website using a `file://` url, it needs to be
 served by a web server. This web server needs to PHP support because accessing
-(tgftp.nws.noaa.gov)[http://tgftp.nws.noaa.gov] qualifies as cross site scripting and hence requires a. The one I use
+[tgftp.nws.noaa.gov](http://tgftp.nws.noaa.gov) qualifies as cross site scripting and hence requires a. The one I use
 is written in PHP because that's the language supported by most hosters.
 
 Anyway: Clicking on one of the markers opens a popup that currently shows the raw METAR data. Note that the popup may
