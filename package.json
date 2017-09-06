@@ -20,24 +20,24 @@
   "license": "BSD-2-Clause",
   "devDependencies": {
     "fs-extra": "^4.0.1",
+    "http-server": "^0.10.0",
     "jsftp": "^2.0.0",
     "papaparse": "^4.3.5",
     "standard": "^10.0.3"
   },
   "scripts": {
+    "serve": "http-server ./website",
     "publish": "npm run setup && npm run makeWebsite",
     "setup": "npm run fetchData && npm run processData",
     "fetchData": "npm run getAirportList && npm run getAdditionalData",
     "getAdditionalData": "npm run getCountries && npm run getIcaoWithMetarAvailable",
     "getAirportList": "npm run getAirportListFromOpenFlights && npm run getAirportListFromOurAirports",
-
     "getAirportListFromOpenFlights": "node ./scripts/getAirportListFromOpenFlights.js",
     "getAirportListFromOurAirports": "node ./scripts/getAirportListFromOurAirports.js",
     "getCountries": "node ./scripts/getCountries.js",
     "getIcaoWithMetarAvailable": "node ./scripts/getIcaoWithMetarAvailable.js",
     "makeWebsite": "node ./scripts/copyFilesToWebDirectory.js",
     "processData": "node ./scripts/extractSupportedAirports.js"
-
   },
   "bugs": {
     "url": "https://github.com/penpendede/airportWeather/issues"

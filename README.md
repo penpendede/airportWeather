@@ -20,10 +20,16 @@ To create the web page that links the METAR data
 1. issue `npm run publish` 
 
 These steps will obtain all the packages and data needed (a couple of MB), process the data and generate a subdirectory
-named `webpage` containing a webpage displaying all the airports for which a location is available and for which
+named `website` containing a website displaying all the airports for which a location is available and for which
 the availability of METAR information has been confirmed (said METAR information may however be outdated).
 
-Clicking on one of the markers opens a popup that contains a link to the raw METAR data.
+Due to browser security settings you will not be able to open the website using a `file://` url, it needs to be
+served by a web server. You don't have a web server at hand? Never mind, just issue `npm run serve`. It will start
+[http-server](https://www.npmjs.com/package/http-server) which will print the URL you can use to connect to it.
+Usually [http://localhost:8080](http://localhost:8080) will do the job. BTW: `http-server` also supports `https` - I tried it out, works fine. 
+
+
+Anyway: Clicking on one of the markers opens a popup that currently just contains a link to the raw METAR data.
 
 `package.json` contains a number of tasks that allow you to only update what really needs to be updated - see the
 following diagram: The task names are verbose to make it obvious what the individual tasks are good for.
