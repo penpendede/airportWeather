@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./css/leaflet.css"/>
+    <link rel="stylesheet" href="./css/MarkerCluster.css" />
+    <link rel="stylesheet" href="./css/MarkerCluster.Default.css" />
+
     <script src="./js/leaflet.js"></script>
-    <script src="./js/Leaflet.VectorGrid.js"></script>
+    <script src="./js/leaflet.markercluster.js"></script>
 
     <style>
         body {
@@ -38,11 +41,14 @@
 
     function processAirportsData(data) {
       var airports = JSON.parse(data)
-      var airportLayer = L.vectorGrid.slicer(airports, {
-        interactive: true
-      }).addTo(map)
-      airportLayer.on('click', function (e) {
-        var icao = e.layer.properties.icao
+      var markers = L.markerClusterGroup();
+
+      var geoJsonLayer = L.geoJson(airports);
+      markers.addLayer(geoJsonLayer);
+      map.addLayer(markers);
+
+      markers.on('click', function (e) {
+        var icao = e.layer.feature.properties.icao
 
         function processStationData (data) {
           popup
