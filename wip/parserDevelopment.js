@@ -1,3 +1,4 @@
+let MetarParser = require('../lib/MetarParser')
 // Data for the most important airports in the word and those you typically use to reach the UN city of Bonn
 // The date provided by the server is discarded so I use the most important caesura in aviation history
 // For the time being only international METAR codes will be supported as my focus is on Afro-Eurasia.
@@ -66,67 +67,10 @@ let metarExampleData = [
   'ZUUU 111246Z 24001MPS 7000 FEW050 23/22 Q1011 NOSIG'
 ]
 
-function MetarData (metarString) {
-  this.metarString_ = metarString
-  let metar = metarString.split(/\s+/)
-  this.metarData_ = {
-    'pressure': metar.find(part => part.match(/^Q\d\d\d\d$/) || part.match(/^A\d\d\d\d$/)),
-    'tempAndDew': metar.find(part => part.match(/^M?\d\d\/M?\d\d$/)),
-    'visibility': metar.find(part => part.match(/^\d+$/)) // so far only ISO
-  }
-
-  this.getRawMetarData = function () {
-    return this.metarString_
-  }
-
-  this.getRawMetarParts = function () {
-    return this.metarData_
-  }
-
-  this.getPressureDescription = function () {
-    if (this.metarData_.pressure) {
-      let value = parseInt(this.metarData_.pressure.substr(1))
-      return (this.metarData_.pressure[0] === 'Q') ? `${value} hPa` : `${value * 0.01} inHg`
-    }
-  }
-
-  this.getTemperatureDescription = function () {
-    if (this.metarData_.tempAndDew) {
-      return this.metarData_.tempAndDew.match(/^(M?\d\d)/)[1].replace('M', '-') + ' °C'
-    }
-  }
-
-  this.getDewPointDescription = function () {
-    if (this.metarData_.tempAndDew) {
-      return this.metarData_.tempAndDew.match(/(M?\d\d)$/)[1].replace('M', '-') + ' °C'
-    }
-  }
-
-  this.getVisibilityDescription = function () {
-    if (this.metarData_.visibility) {
-      let visibility = parseInt(this.metarData_.visibility)
-      switch (visibility) {
-        case 9999:
-          return '10 km or more'
-        case 0:
-          return 'less than 50 m'
-        default:
-          if (visibility < 1000) {
-            return visibility + ' m'
-          } else {
-            visibility = this.metarData_.visibility
-            return visibility[0] + '.' + visibility.substring(1) + ' km'
-          }
-      }
-    }
-  }
-}
-
 // That's a fake
 let data = '2001/09/11 08:46 \n' + metarExampleData[Math.floor(Math.random() * metarExampleData.length)]
 
-let metarData = new MetarData(data.split('\n')[1])
-
+let metarData = new MetarParser(data.split('\n')[1])
 console.log(metarData.getRawMetarData())
 console.log(metarData.getRawMetarParts())
 console.log('Pressure:    ' + metarData.getPressureDescription())

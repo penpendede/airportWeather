@@ -3,7 +3,7 @@
 	<style type="text/css">
 		<![CDATA[
 			circle {
-				fill: #00f;
+				fill: #009;
 			}
 			#anim > circle {
 				animation-name: fade;
