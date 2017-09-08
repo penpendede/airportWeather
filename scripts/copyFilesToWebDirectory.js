@@ -31,5 +31,8 @@ fs.copySync('./images', './website/images')
 // copy css
 fs.copySync('./css', './website/css')
 
+// copy parser
+fs.copySync('./lib', './website/js')
+
 // copy airport list
 fs.copySync('./data/supportedAirports.geojson', './website/data/airports.geojson')
