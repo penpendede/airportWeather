@@ -9,21 +9,10 @@
     <link rel="stylesheet" href="./css/leaflet.css"/>
     <link rel="stylesheet" href="./css/MarkerCluster.css" />
     <link rel="stylesheet" href="./css/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="./css/airportWeather.css" />
 
     <script src="./js/leaflet.js"></script>
     <script src="./js/leaflet.markercluster.js"></script>
-
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-        }
-
-        html, body, #map {
-            height: 100%;
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
 <div id="map" style="display: block; width: 100%; height: 100%;"></div>
@@ -58,11 +47,24 @@
       map.addLayer(markers);
 
       markers.on('click', function (e) {
-        var icao = e.layer.feature.properties.icao
+        var feature =  e.layer.feature.properties
+
+        var fixedData = '<h3>' + feature.name + ' (' + feature.icao + ')' + '</h3>'
+
+        popup
+          .setContent(
+            fixedData +
+            '<div id="loading"><img src="images/loading.svg"></div>'
+          )
+          .setLatLng([e.latlng.lat, e.latlng.lng])
+          .openOn(map)
 
         function processStationData (data) {
           popup
-            .setContent(data.split('\n')[1])
+            .setContent(
+              fixedData +
+              '<p>' + data.split('\n')[1] + '</p>'
+            )
             .setLatLng([e.latlng.lat, e.latlng.lng])
             .openOn(map)
         }
@@ -76,7 +78,7 @@
         var stationClient = new XMLHttpRequest()
 
         stationClient.onload = stationHandler
-        stationClient.open('GET', baseUrl + icao + '.TXT')
+        stationClient.open('GET', baseUrl + feature.icao + '.TXT')
         stationClient.send()
       })
     }

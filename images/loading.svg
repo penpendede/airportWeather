@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2800 2800">
+	<style type="text/css">
+		<![CDATA[
+			circle {
+				fill: #00f;
+			}
+			#anim > circle {
+				animation-name: fade;
+				animation-duration: 1.8s;
+				animation-iteration-count: infinite;
+				opacity: 0;
+			}
+			#anim > circle:nth-child(1) {
+				animation-delay: 0s;
+			}
+			#anim > circle:nth-child(2) {
+				animation-delay: 0.15s;
+			}
+			#anim > circle:nth-child(3) {
+				animation-delay: 0.3s;
+			}
+			#anim > circle:nth-child(4) {
+				animation-delay: 0.45s;
+			}
+			#anim > circle:nth-child(5) {
+				animation-delay: 0.6s;
+			}
+			#anim > circle:nth-child(6) {
+				animation-delay: 0.75s;
+			}
+			#anim > circle:nth-child(7) {
+				animation-delay: 0.9s;
+			}
+			#anim > circle:nth-child(8) {
+				animation-delay: 1.05s;
+			}
+			#anim > circle:nth-child(9) {
+				animation-delay: 1.2s;
+			}
+			#anim > circle:nth-child(10) {
+				animation-delay: 1.35s;
+			}
+			#anim > circle:nth-child(11) {
+				animation-delay: 1.5s;
+			}
+			#anim > circle:nth-child(12) {
+				animation-delay: 1.65s;
+			}
+			@keyframes fade {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+		]]>
+	</style>
+	<rect x="0" y="0" width="2800" height="2800" fill="#fff" />
+	<g id="anim" transform="translate(1400, 1400)">
+		<circle cx="0" cy="-1000" r="150" transform="rotate(0)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(30)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(60)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(90)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(120)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(150)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(180)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(210)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(240)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(270)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(300)" />
+		<circle cx="0" cy="-1000" r="150" transform="rotate(330)" />
+	</g>
+</svg>
