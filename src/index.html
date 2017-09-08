@@ -49,7 +49,8 @@
       markers.on('click', function (e) {
         var feature =  e.layer.feature.properties
 
-        var fixedData = '<h3>' + feature.name + ' (' + feature.icao + ')' + '</h3>'
+        var fixedData = '<h3>' + feature.name + ' (' + feature.icao + ')' + '</h3>' +
+          '<p><b>Location:</b> ' + feature.placeName + '</p>'
 
         popup
           .setContent(
