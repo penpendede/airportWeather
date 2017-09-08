@@ -3,6 +3,7 @@ const fs = require('fs-extra')
 const airportDataFromOpenFlights = require('../data/airportDataFromOpenFlights')
 const airportDataFromOurAirports = require('../data/airportDataFromOurAirports')
 const icaoWithMetarAvailable = require('../data/icaoWithMetarAvailable')
+const countries = require('../data/countries.json')
 
 const config = {
   'local': {
@@ -66,8 +67,10 @@ knownAirportsWithMetarAvailable.forEach(icao => {
       'icao': icao,
       'lon': airportDataForCurrentIcao.longitude,
       'lat': airportDataForCurrentIcao.latitude,
+      'alt': airportDataForCurrentIcao.altitude,
       'name': airportDataForCurrentIcao.name,
-      'placeName': airportDataForCurrentIcao.city
+      'place': airportDataForCurrentIcao.city,
+      'country': airportDataForCurrentIcao.country
     })
   } else {
     airportsThatStillNeedCoordinates.push(icao)
@@ -84,12 +87,17 @@ if (airportsThatStillNeedCoordinates.length) {
     if (airportDataForCurrentIcao &&
       !isNaN(airportDataForCurrentIcao.longitude) &&
       !isNaN(airportDataForCurrentIcao.latitude)) {
+      let countryData = countries.find(entry => entry.code === airportDataForCurrentIcao.countryIso)
       knownAirportsWithCoordinatesWhereMetarIsAvailable.push({
         'icao': icao,
         'lon': airportDataForCurrentIcao.longitude,
         'lat': airportDataForCurrentIcao.latitude,
         'name': airportDataForCurrentIcao.name,
-        'placeName': airportDataForCurrentIcao.municipality
+        'place': airportDataForCurrentIcao.municipality,
+        'country': countryData
+          ? countryData.name
+          : airportDataForCurrentIcao.countryIso, // unlikely
+        'alt': airportDataForCurrentIcao.elevation
       })
     }
   })
@@ -112,7 +120,11 @@ knownAirportsWithCoordinatesWhereMetarIsAvailable.forEach(airportData => {
     'properties': {
       'icao': airportData.icao,
       'name': airportData.name,
-      'placeName': airportData.placeName
+      'place': airportData.place,
+      'country': airportData.country,
+      'lon': parseFloat(airportData.lon),
+      'lat': parseFloat(airportData.lat),
+      'alt': parseFloat(airportData.alt)
     }
   })
 })

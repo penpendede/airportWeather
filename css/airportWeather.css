@@ -17,3 +17,12 @@ html, body, #map {
     width: 36px;
     height: 36px;
 }
+
+.airport {
+    font-weight: bold;
+    font-size: larger;
+}
+
+table, tr, th, td {
+    vertical-align: top;
+}
