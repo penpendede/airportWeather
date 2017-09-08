@@ -28,5 +28,8 @@ fs.copySync('./src', './website')
 // copy images
 fs.copySync('./images', './website/images')
 
+// copy css
+fs.copySync('./css', './website/css')
+
 // copy airport list
 fs.copySync('./data/supportedAirports.geojson', './website/data/airports.geojson')

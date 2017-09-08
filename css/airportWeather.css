@@ -1,0 +1,19 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html, body, #map {
+    height: 100%;
+    width: 100%;
+}
+
+#loading {
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+#loading img {
+    width: 36px;
+    height: 36px;
+}

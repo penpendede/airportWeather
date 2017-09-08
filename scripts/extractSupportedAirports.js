@@ -65,7 +65,8 @@ knownAirportsWithMetarAvailable.forEach(icao => {
     knownAirportsWithCoordinatesWhereMetarIsAvailable.push({
       'icao': icao,
       'lon': airportDataForCurrentIcao.longitude,
-      'lat': airportDataForCurrentIcao.latitude
+      'lat': airportDataForCurrentIcao.latitude,
+      'name': airportDataForCurrentIcao.name
     })
   } else {
     airportsThatStillNeedCoordinates.push(icao)
@@ -73,7 +74,6 @@ knownAirportsWithMetarAvailable.forEach(icao => {
 })
 
 if (airportsThatStillNeedCoordinates.length) {
-
   console.log('Searching coordinates in OurAirports data.')
 
   airportsThatStillNeedCoordinates.forEach(icao => {
@@ -86,7 +86,8 @@ if (airportsThatStillNeedCoordinates.length) {
       knownAirportsWithCoordinatesWhereMetarIsAvailable.push({
         'icao': icao,
         'lon': airportDataForCurrentIcao.longitude,
-        'lat': airportDataForCurrentIcao.latitude
+        'lat': airportDataForCurrentIcao.latitude,
+        'name': airportDataForCurrentIcao.name
       })
     }
   })
@@ -107,7 +108,8 @@ knownAirportsWithCoordinatesWhereMetarIsAvailable.forEach(airportData => {
       ]
     },
     'properties': {
-      'icao': airportData.icao
+      'icao': airportData.icao,
+      'name': airportData.name
     }
   })
 })
