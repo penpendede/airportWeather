@@ -28,12 +28,12 @@
 
     var popup = L.popup()
 
-    function makeAirportTable(data) {
+    function makeAirportTableContent(data) {
       rows = []
       for (var i = 0; i < data.length; i++) {
         rows.push('<th>' + data[i][0] + '</th><td>' + data[i][1] + '</td>')
       }
-      return '<table><tr class="airport">' + rows.join('</tr><tr>') + '</tr></table>'
+      return '<tr class="airport">' + rows.join('</tr><tr>') + '</tr>'
     }
 
     function toDegMinSec(value) {
@@ -75,7 +75,7 @@
 
         let alt = (feature.alt * 0.3048).toFixed(2) // in meters
 
-        var fixedData =  makeAirportTable([
+        var fixedData =  makeAirportTableContent([
             ['Airport', feature.name],
             ['ICAO', feature.icao],
             ['Location', feature.place],
@@ -87,7 +87,7 @@
 
         popup
           .setContent(
-            fixedData +
+            '<table>' + fixedData + '</table>' +
             '<div id="loading"><img src="images/loading.svg"></div>'
           )
           .setLatLng([e.latlng.lat, e.latlng.lng])
@@ -96,8 +96,8 @@
         function processStationData (data) {
           popup
             .setContent(
-              fixedData +
-              '<p>' + data.split('\n')[1] + '</p>'
+              '<table>' + fixedData +
+              '<tr><th>raw data</th><td>' + data.split('\n')[1] + '</td></tr></table>'
             )
             .setLatLng([e.latlng.lat, e.latlng.lng])
             .openOn(map)

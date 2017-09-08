@@ -29,7 +29,7 @@ served by a web server. This web server needs to PHP support because accessing
 is written in PHP because that's the language supported by most hosters.
 
 Anyway: Clicking on one of the markers opens a popup that initally shows some static information about the airport to
-which the raw METAR data is added as soon as it has been fetched.
+which the raw METAR data is added as soon as it has been fetched.   
 
 `package.json` contains a number of tasks that allow you to only update what really needs to be updated - see the
 following diagram: The task names are verbose to make it obvious what the individual tasks are good for.
