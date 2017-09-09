@@ -28,7 +28,12 @@ served by a web server. This web server needs to PHP support because accessing
 [tgftp.nws.noaa.gov](http://tgftp.nws.noaa.gov) qualifies as cross site scripting and hence requires a. The one I use
 is written in PHP because that's the language supported by most hosters.
 
-Anyway: Clicking on one of the markers opens a popup that initally shows some static information about the airport to
+Anyway, if you move the mouse over a marker you see a tooltip with the airport's name as well as its ICAO code,
+the location (nearby city or similar) and in which country it is located as illustrated below:
+
+![Tooltip](./tooltip.jpg) 
+
+Clicking on one of the markers opens a popup that initally shows some static information about the airport to
 which METAR data is added as soon as it has been fetched. Currently the following is provided:
 
 * Pressure
