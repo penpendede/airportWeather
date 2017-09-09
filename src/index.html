@@ -27,8 +27,8 @@
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    var layerPopup = L.popup();
-    var featurePopup = L.popup();
+    var layerPopup = L.popup({'closeButton': false, 'offset': L.point(0, -48)});
+    var featurePopup = L.popup({'offset': L.point(0, -48)});
 
     function makeAirportTableContent(data) {
       rows = [];
@@ -68,16 +68,19 @@
       map.addLayer(markers);
 
       markers.on('mouseover', function(e){
-        var coordinates = e.layer.feature.geometry.coordinates;
-        var swapped_coordinates = [coordinates[1], coordinates[0]];  //Swap Lat and Lng
         if (map) {
+          var prop = e.layer.feature.properties;
           layerPopup
-            .setLatLng(swapped_coordinates)
+            .setLatLng([e.latlng.lat, e.latlng.lng])
             .setContent(
-              '<div style="text-align:center;">' +
-              '<b>' + e.layer.feature.properties.name + '</b><br />' +
-              '(' + e.layer.feature.properties.icao + ')' +
-              '</div>'
+              '<div id="tooltip-title" class="airport">' + prop.name + '</div>' +
+              '<table class="centered">' +
+              makeAirportTableContent([
+                ['ICAO', prop.icao],
+                ['Location', prop.place],
+                ['Country', prop.country]
+              ]) +
+              '</table>'
             )
             .openOn(map);
         }

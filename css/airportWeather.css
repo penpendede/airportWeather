@@ -30,3 +30,15 @@ table, tr, th, td {
 table {
     border-spacing: 0;
 }
+
+#tooltip-title {
+    text-align: center;
+    width: 100%;
+    max-width: 150px;
+    padding-bottom: 0.5em;
+}
+
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+}
