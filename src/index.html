@@ -19,37 +19,38 @@
 <div id="map" style="display: block; width: 100%; height: 100%;"></div>
 
 <script>
-    var baseUrl = './proxy.php?csurl=http%3A%2F%2Ftgftp.nws.noaa.gov%2Fdata%2Fobservations%2Fmetar%2Fstations%2F'
-    var map = L.map('map').setView([50.865833, 7.142778], 8)
+    var baseUrl = './proxy.php?csurl=http%3A%2F%2Ftgftp.nws.noaa.gov%2Fdata%2Fobservations%2Fmetar%2Fstations%2F';
+    var map = L.map('map').setView([50.865833, 7.142778], 8);
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map)
+    }).addTo(map);
 
-    var popup = L.popup()
+    var layerPopup = L.popup({'closeButton': false, 'offset': L.point(0, -48)});
+    var featurePopup = L.popup({'offset': L.point(0, -48)});
 
     function makeAirportTableContent(data) {
-      rows = []
+      rows = [];
       for (var i = 0; i < data.length; i++) {
         if (data[i][0] === 'Airport') {
-          rows.push('<th class="airport">' + data[i][0] + '</th><td class="airport">' + data[i][1] + '</td>')
+          rows.push('<th class="airport">' + data[i][0] + '</th><td class="airport">' + data[i][1] + '</td>');
         } else {
-          rows.push('<th>' + data[i][0] + '</th><td>' + data[i][1] + '</td>')
+          rows.push('<th>' + data[i][0] + '</th><td>' + data[i][1] + '</td>');
         }
       }
       return '<tr>' + rows.join('</tr><tr>') + '</tr>'
     }
 
     function toDegMinSec(value) {
-      var deg = Math.floor(value)
-      value = (value - deg) * 60
-      var min = Math.floor(value)
-      return deg + '°' + min + '′' + ((value - min) * 60).toFixed(3) + '″'
+      var deg = Math.floor(value);
+      value = (value - deg) * 60;
+      var min = Math.floor(value);
+      return deg + '°' + min + '′' + ((value - min) * 60).toFixed(3) + '″';
     }
 
     function processAirportsData(data) {
-      var airports = JSON.parse(data)
+      var airports = JSON.parse(data);
       var markers = L.markerClusterGroup();
 
       var geoJsonLayer = L.geoJson(airports, {
@@ -66,19 +67,44 @@
       markers.addLayer(geoJsonLayer);
       map.addLayer(markers);
 
+      markers.on('mouseover', function(e){
+        if (map) {
+          var prop = e.layer.feature.properties;
+          layerPopup
+            .setLatLng([e.latlng.lat, e.latlng.lng])
+            .setContent(
+              '<div id="tooltip-title" class="airport">' + prop.name + '</div>' +
+              '<table class="centered">' +
+              makeAirportTableContent([
+                ['ICAO', prop.icao],
+                ['Location', prop.place],
+                ['Country', prop.country]
+              ]) +
+              '</table>'
+            )
+            .openOn(map);
+        }
+      });
+      markers.on('mouseout', function (e) {
+        if (layerPopup && map) {
+          map.closePopup(layerPopup);
+        }
+      });
+
+
       markers.on('click', function (e) {
-        var feature =  e.layer.feature.properties
+        var feature =  e.layer.feature.properties;
 
-        var value = feature.lon
-        var suffix = '&nbsp;' + ((value < 0) ? 'W' : 'E')
-        value = Math.abs(value)
-        var lon = value.toFixed(6) + '°' + suffix + ' / ' + toDegMinSec(value) + suffix
-        value = feature.lat
-        var suffix = '&nbsp;' + ((value < 0) ? 'S' : 'N')
-        value = Math.abs(value)
-        var lat = value.toFixed(6) + '°' + suffix + ' / ' + toDegMinSec(value) + suffix
+        var value = feature.lon;
+        var suffix = '&nbsp;' + ((value < 0) ? 'W' : 'E');
+        value = Math.abs(value);
+        var lon = value.toFixed(6) + '°' + suffix + ' / ' + toDegMinSec(value) + suffix;
+        value = feature.lat;
+        suffix = '&nbsp;' + ((value < 0) ? 'S' : 'N');
+        value = Math.abs(value);
+        var lat = value.toFixed(6) + '°' + suffix + ' / ' + toDegMinSec(value) + suffix;
 
-        var alt = (feature.alt * 0.3048).toFixed(2) // in meters
+        var alt = (feature.alt * 0.3048).toFixed(2); // in meters
 
         var fixedData =  makeAirportTableContent([
             ['Airport', feature.name],
@@ -88,19 +114,19 @@
             ['Longitude', lon ],
             ['Latitude', lat],
             ['Altitude', alt + ' meters AMSL']
-          ])
+          ]);
 
-        popup
+        featurePopup
           .setContent(
             '<table>' + fixedData + '</table>' +
             '<div id="loading"><img src="images/loading.svg"></div>'
           )
           .setLatLng([e.latlng.lat, e.latlng.lng])
-          .openOn(map)
+          .openOn(map);
 
         function processStationData (data) {
-          var metarData = new MetarParser(data)
-          popup
+          var metarData = new MetarParser(data);
+          featurePopup
             .setContent(
               '<table>' + fixedData +
                     makeAirportTableContent([
@@ -113,34 +139,34 @@
               '</table>'
             )
             .setLatLng([e.latlng.lat, e.latlng.lng])
-            .openOn(map)
+            .openOn(map);
         }
 
         function stationHandler() {
-          if(this.status === 200 && this.responseText != null) {
-            processStationData(this.responseText)
+          if(this.status === 200 && this.responseText) {
+            processStationData(this.responseText);
           }
         }
 
-        var stationClient = new XMLHttpRequest()
+        var stationClient = new XMLHttpRequest();
 
-        stationClient.onload = stationHandler
-        stationClient.open('GET', baseUrl + feature.icao + '.TXT')
-        stationClient.send()
+        stationClient.onload = stationHandler;
+        stationClient.open('GET', baseUrl + feature.icao + '.TXT');
+        stationClient.send();
       })
     }
 
     function airportsHandler() {
-      if(this.status === 200 && this.responseText != null) {
-        processAirportsData(this.responseText)
+      if(this.status === 200 && this.responseText) {
+        processAirportsData(this.responseText);
       }
     }
 
-    var airportsClient = new XMLHttpRequest()
+    var airportsClient = new XMLHttpRequest();
 
-    airportsClient.onload = airportsHandler
-    airportsClient.open('GET', './data/airports.geojson')
-    airportsClient.send()
+    airportsClient.onload = airportsHandler;
+    airportsClient.open('GET', './data/airports.geojson');
+    airportsClient.send();
 </script>
 
 </body>
