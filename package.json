@@ -1,6 +1,6 @@
 {
   "name": "airportWeather",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Show metar weather information for airports",
   "keywords": [
     "leaflet",
