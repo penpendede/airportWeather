@@ -42,9 +42,9 @@
     }
 
     function toDegMinSec(value) {
-      let deg = Math.floor(value)
+      var deg = Math.floor(value)
       value = (value - deg) * 60
-      let min = Math.floor(value)
+      var min = Math.floor(value)
       return deg + '°' + min + '′' + ((value - min) * 60).toFixed(3) + '″'
     }
 
@@ -78,7 +78,7 @@
         value = Math.abs(value)
         var lat = value.toFixed(6) + '°' + suffix + ' / ' + toDegMinSec(value) + suffix
 
-        let alt = (feature.alt * 0.3048).toFixed(2) // in meters
+        var alt = (feature.alt * 0.3048).toFixed(2) // in meters
 
         var fixedData =  makeAirportTableContent([
             ['Airport', feature.name],
