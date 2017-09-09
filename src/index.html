@@ -126,18 +126,23 @@
 
         function processStationData (data) {
           var metarData = new MetarParser(data);
+          var tableEntries = [
+            ['Time', '<b>' + metarData.getTime() + '</b>'],
+            ['Pressure', metarData.getPressureDescription()],
+            ['Temperature', metarData.getTemperatureDescription()],
+            ['Dew Point', metarData.getDewPointDescription()],
+            ['Visibility', metarData.getVisibilityDescription()],
+            ['RAW DATA', metarData.getRawMetarData()]
+          ]
+          var date = new Date()
+          if (date.getUTCDate() !== metarData.getDayInMonth()) {
+            tableEntries.splice(1, 0, [
+              '<b style="color: red;">Day&nbsp;of&nbsp;Month</b>',
+              '<b style="color: red;">' + metarData.getDayInMonth() + '</b>'
+            ])
+          }
           featurePopup
-            .setContent(
-              '<table>' + fixedData +
-                    makeAirportTableContent([
-                      ['Pressure', metarData.getPressureDescription()],
-                      ['Temperature', metarData.getTemperatureDescription()],
-                      ['Dew Point', metarData.getDewPointDescription()],
-                      ['Visibility', metarData.getVisibilityDescription()],
-                      ['RAW DATA', metarData.getRawMetarData()]
-                    ]) +
-              '</table>'
-            )
+            .setContent('<table>' + fixedData + makeAirportTableContent(tableEntries) + '</table>')
             .setLatLng([e.latlng.lat, e.latlng.lng])
             .openOn(map);
         }
