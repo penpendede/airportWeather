@@ -27,7 +27,11 @@
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    var layerPopup = L.popup({'closeButton': false, 'offset': L.point(0, -48)});
+    var layerPopup = L.popup({
+      'autoPan': false,
+      'closeButton': false,
+      'offset': L.point(0, -48)
+    });
     var featurePopup = L.popup({'offset': L.point(0, -48)});
 
     function makeAirportTableContent(data) {
