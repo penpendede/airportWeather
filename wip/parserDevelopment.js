@@ -1,4 +1,5 @@
 let MetarParser = require('../lib/MetarParser')
+let TimeDifference = require('../lib/TimeDifference')
 // Data for the most important airports in the word and those you typically use to reach the UN city of Bonn
 // The date provided by the server is discarded so I use the most important caesura in aviation history
 // For the time being only international METAR codes will be supported as my focus is on Afro-Eurasia.
@@ -70,7 +71,33 @@ let metarExampleData = [
 // That's a fake
 let data = '2001/09/11 08:46 \n' + metarExampleData[Math.floor(Math.random() * metarExampleData.length)]
 
-let metarData = new MetarParser(data.split('\n')[1])
+let timeDifference = new TimeDifference(new Date(2017, 8, 10, 16, 37, 0, 113))
+
+let fakeNow = new Date(2017, 8, 11, 19, 39, 1, 886)
+
+console.log('milliseconds    ' + timeDifference.getDifference(fakeNow))
+console.log('seconds (plain) ' + timeDifference.getDifference(fakeNow, {'unit': 's'}))
+console.log('seconds (true)  ' + timeDifference.getDifference(fakeNow, {'unit': 's', 'rounding': true}))
+console.log('seconds (ceil)  ' + timeDifference.getDifference(fakeNow, {'unit': 's', 'rounding': 'ceil'}))
+console.log('seconds (floor) ' + timeDifference.getDifference(fakeNow, {'unit': 's', 'rounding': 'floor'}))
+console.log('seconds (trunc) ' + timeDifference.getDifference(fakeNow, {'unit': 's', 'rounding': 'floor'}))
+console.log('minutes         ' + timeDifference.getDifference(fakeNow, {'unit': 'm'}))
+console.log('minutes (true)  ' + timeDifference.getDifference(fakeNow, {'unit': 'm', 'rounding': true}))
+console.log('minutes (ceil)  ' + timeDifference.getDifference(fakeNow, {'unit': 'm', 'rounding': 'ceil'}))
+console.log('minutes (floor) ' + timeDifference.getDifference(fakeNow, {'unit': 'm', 'rounding': 'floor'}))
+console.log('minutes (trunc) ' + timeDifference.getDifference(fakeNow, {'unit': 'm', 'rounding': 'floor'}))
+console.log('hours           ' + timeDifference.getDifference(fakeNow, {'unit': 'h'}))
+console.log('hours (true)    ' + timeDifference.getDifference(fakeNow, {'unit': 'h', 'rounding': true}))
+console.log('hours (ceil)    ' + timeDifference.getDifference(fakeNow, {'unit': 'h', 'rounding': 'ceil'}))
+console.log('hours (floor)   ' + timeDifference.getDifference(fakeNow, {'unit': 'h', 'rounding': 'floor'}))
+console.log('hours (trunc)   ' + timeDifference.getDifference(fakeNow, {'unit': 'h', 'rounding': 'floor'}))
+console.log('days            ' + timeDifference.getDifference(fakeNow, {'unit': 'd'}))
+console.log('days (true)     ' + timeDifference.getDifference(fakeNow, {'unit': 'd', 'rounding': true}))
+console.log('days (ceil)     ' + timeDifference.getDifference(fakeNow, {'unit': 'd', 'rounding': 'ceil'}))
+console.log('days (floor)    ' + timeDifference.getDifference(fakeNow, {'unit': 'd', 'rounding': 'floor'}))
+console.log('days (trunc)    ' + timeDifference.getDifference(fakeNow, {'unit': 'd', 'rounding': 'floor'}))
+
+var metarData = new MetarParser(data.split('\n')[1])
 console.log(metarData.getRawMetarData())
 console.log(metarData.getRawMetarParts())
 console.log('Pressure:     ' + metarData.getPressureDescription())
