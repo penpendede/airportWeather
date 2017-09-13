@@ -28,7 +28,20 @@
     var map = L.map('map').setView([50.865833, 7.142778], 8);
 
     var info = L.control.dialog({'initOpen': false})
-      .setContent("<p>Will display information soon.</p>")
+      .setContent(
+        "<h1>Info</h1>" +
+        "<p><b>Note: </b>This is just a preliminary info box. It will be improved in later releases.</p>" +
+        "<p>" +
+        "This map uses data from <a href='http://ourairports.com/data/' target='_blank'>OurAirports.com</a>, " +
+        "<a href='https://openflights.org/about' target='_blank'>OpenFlights.org</a> " +
+        "(via <a href='https://github.com/jpatokal/openflights' target='_blank'>github</a>) and " +
+        "<a href='http://tgftp.nws.noaa.gov/data/observations/metar/stations/' target='_blank'>NOOA</a> " +
+        "(US National Oceanic and Atmospheric Administration)." +
+        "</p>" +
+        "<p>" +
+        "It is an open source project, find it on " +
+        "<a href='https://github.com/penpendede/airportWeather' target='_blank'>github.com</a>"
+      )
       .addTo(map);
 
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
