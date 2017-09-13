@@ -21,6 +21,9 @@
   "devDependencies": {
     "fs-extra": "^4.0.1",
     "jsftp": "^2.0.0",
+    "leaflet": "^1.2.0",
+    "leaflet-easybutton": "^2.2.2",
+    "leaflet.markercluster": "^1.1.0",
     "papaparse": "^4.3.5",
     "standard": "^10.0.3"
   },
@@ -45,10 +48,5 @@
       "name": "penpendede",
       "email": "penpendede@mail.ru"
     }
-  ],
-  "dependencies": {
-    "leaflet": "^1.2.0",
-    "leaflet-easybutton": "^2.2.2",
-    "leaflet.markercluster": "^1.1.0"
-  }
+  ]
 }
