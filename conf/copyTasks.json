@@ -1,0 +1,15 @@
+{
+  "./css": "./website/css",
+  "./data/supportedAirports.geojson": "./website/data/airports.geojson",
+  "./images": "./website/images",
+  "./lib": "./website/js",
+  "./node_modules/leaflet/dist/images": "./website/css/images",
+  "./node_modules/leaflet/dist/leaflet.css": "./website/css/leaflet.css",
+  "./node_modules/leaflet/dist/leaflet.js": "./website/js/leaflet.js",
+  "./node_modules/leaflet-easybutton/src/easy-button.css": "./website/css/easy-button.css",
+  "./node_modules/leaflet-easybutton/src/easy-button.js": "./website/js/easy-button.js",
+  "./node_modules/leaflet.markercluster/dist/leaflet.markercluster.js": "./website/js/leaflet.markercluster.js",
+  "./node_modules/leaflet.markercluster/dist/MarkerCluster.css": "./website/css/MarkerCluster.css",
+  "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css": "./website/css/MarkerCluster.Default.css",
+  "./src": "./website"
+}
