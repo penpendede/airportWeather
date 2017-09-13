@@ -6,15 +6,18 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="./css/font-awesome.min.css"/>
     <link rel="stylesheet" href="./css/leaflet.css"/>
     <link rel="stylesheet" href="./css/MarkerCluster.css" />
     <link rel="stylesheet" href="./css/MarkerCluster.Default.css" />
     <link rel="stylesheet" href="./css/easy-button.css" />
+    <link rel="stylesheet" href="./css/Leaflet.Dialog.css" />
     <link rel="stylesheet" href="./css/airportWeather.css" />
 
     <script src="./js/leaflet.js"></script>
     <script src="./js/leaflet.markercluster.js"></script>
     <script src="./js/easy-button.js"></script>
+    <script src="./js/Leaflet.Dialog.js"></script>
     <script src="./js/MetarParser.js"></script>
 </head>
 <body>
@@ -24,13 +27,21 @@
     var baseUrl = './proxy.php?csurl=http%3A%2F%2Ftgftp.nws.noaa.gov%2Fdata%2Fobservations%2Fmetar%2Fstations%2F';
     var map = L.map('map').setView([50.865833, 7.142778], 8);
 
+    var info = L.control.dialog({'initOpen': false})
+      .setContent("<p>Will display information soon.</p>")
+      .addTo(map);
+
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
     L.easyButton('<img src="images/info.svg" style="vertical-align: middle;">', function(btn, map){
-      window.alert('will display information soon')
+      if (info.getElement().style.visibility === "hidden") {
+        info.open()
+      } else {
+        info.close()
+      }
     }).addTo(map);
 
     var layerPopup = L.popup({

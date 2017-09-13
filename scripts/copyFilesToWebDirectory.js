@@ -4,5 +4,5 @@ const copyTasks = require('../conf/copyTasks')
 fs.removeSync('./website')
 
 for (let src in copyTasks) {
-  fs.copy(src, copyTasks[src])
+  fs.copy(src, './website/' + copyTasks[src])
 }
