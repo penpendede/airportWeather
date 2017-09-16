@@ -1,0 +1,6 @@
+{
+  "proxyAjaxFilters": true,
+  "proxyFilterDomain": true,
+  "proxyAjaxDebug": false,
+  "proxyValidRequests": [ "tgftp.nws.noaa.gov" ]
+}

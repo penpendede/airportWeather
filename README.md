@@ -57,6 +57,8 @@ following diagram: The task names are verbose to make it obvious what the indivi
        │      │             └── getIcaoWithMetarAvailable
        │      └── processData
        └── makeWebsite
+             ├── configureProxy
+             └── assembleWebsite
     
 # Licenses
 

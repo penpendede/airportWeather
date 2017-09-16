@@ -16,5 +16,6 @@
   "./node_modules/leaflet.markercluster/dist/leaflet.markercluster.js": "js/leaflet.markercluster.js",
   "./node_modules/leaflet.markercluster/dist/MarkerCluster.css": "css/MarkerCluster.css",
   "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css": "css/MarkerCluster.Default.css",
+  "./proxy": ".",
   "./src": "."
 }
