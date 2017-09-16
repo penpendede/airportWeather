@@ -4,7 +4,7 @@ Map to get METAR information for airports by clicking on them.
 
 ![Screenshot](./screenshot.jpg)
 
-This project is in the prototype stage. It already has basic functionality but it's not yet for the masses :)
+A working installation is now hosted at [http://metar.codeforbonn.de/](http://metar.codeforbonn.de)
 
 Currently there are:
 
