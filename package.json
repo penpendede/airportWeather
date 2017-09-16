@@ -21,11 +21,13 @@
   "devDependencies": {
     "font-awesome": "^4.7.0",
     "fs-extra": "^4.0.1",
+    "guide4you-proxy": "github:KlausBenndorf/guide4you-proxy",
     "jsftp": "^2.0.0",
     "leaflet": "^1.2.0",
     "leaflet-dialog": "^1.0.1",
     "leaflet-easybutton": "^2.2.2",
     "leaflet.markercluster": "^1.1.0",
+    "mustache": "^2.3.0",
     "papaparse": "^4.3.5",
     "standard": "^10.0.3"
   },
@@ -39,7 +41,9 @@
     "getAirportListFromOurAirports": "node ./scripts/getAirportListFromOurAirports.js",
     "getCountries": "node ./scripts/getCountries.js",
     "getIcaoWithMetarAvailable": "node ./scripts/getIcaoWithMetarAvailable.js",
-    "makeWebsite": "node ./scripts/copyFilesToWebDirectory.js",
+    "makeWebsite": "npm run configureProxy && npm run assembleWebsite",
+    "configureProxy": "node ./scripts/configureProxy.js",
+    "assembleWebsite": "node ./scripts/copyFilesToWebDirectory.js",
     "processData": "node ./scripts/extractSupportedAirports.js"
   },
   "bugs": {
@@ -50,5 +54,6 @@
       "name": "penpendede",
       "email": "penpendede@mail.ru"
     }
-  ]
+  ],
+  "dependencies": {}
 }

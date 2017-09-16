@@ -68,3 +68,6 @@ website
 
 # backup of site-that-was
 original_plesk
+
+# ignored because content is generated
+proxy
