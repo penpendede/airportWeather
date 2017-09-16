@@ -65,3 +65,6 @@ data
 
 # website (because content is generated)
 website
+
+# backup of site-that-was
+original_plesk
