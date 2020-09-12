@@ -18,6 +18,10 @@
   "./node_modules/leaflet.markercluster/dist/leaflet.markercluster.js": "js/leaflet.markercluster.js",
   "./node_modules/leaflet.markercluster/dist/MarkerCluster.css": "css/MarkerCluster.css",
   "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css": "css/MarkerCluster.Default.css",
+  "./node_modules/leaflet.fullscreen/Control.FullScreen.css": "css/Control.FullScreen.css",
+  "./node_modules/leaflet.fullscreen/icon-fullscreen.png": "css/icon-fullscreen.png",
+  "./node_modules/leaflet.fullscreen/icon-fullscreen-2x.png": "css/icon-fullscreen-2x.png",
+  "./node_modules/leaflet.fullscreen/Control.FullScreen.js": "js/Control.FullScreen.js",
   "./proxy": ".",
   "./src": "."
 }

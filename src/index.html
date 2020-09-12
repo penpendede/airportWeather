@@ -20,12 +20,14 @@
     <link rel="stylesheet" href="./css/leaflet.css"/>
     <link rel="stylesheet" href="./css/MarkerCluster.css" />
     <link rel="stylesheet" href="./css/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="./css/Control.FullScreen.css" />
     <link rel="stylesheet" href="./css/easy-button.css" />
     <link rel="stylesheet" href="./css/Leaflet.Dialog.css" />
     <link rel="stylesheet" href="./css/airportWeather.css" />
 
     <script src="./js/leaflet.js"></script>
     <script src="./js/leaflet.markercluster.js"></script>
+    <script src="./js/Control.FullScreen.js"></script>
     <script src="./js/easy-button.js"></script>
     <script src="./js/Leaflet.Dialog.js"></script>
     <script src="./js/MetarParser.js"></script>
@@ -36,7 +38,9 @@
 
 <script>
     var baseUrl = './proxy.php?csurl=http%3A%2F%2Ftgftp.nws.noaa.gov%2Fdata%2Fobservations%2Fmetar%2Fstations%2F';
-    var map = L.map('map').setView([50.865833, 7.142778], 8);
+    var map = L.map('map', {
+      fullscreenControl: true
+    }).setView([50.865833, 7.142778], 8);
 
     var info = L.control.dialog({'initOpen': false})
       .setContent(
