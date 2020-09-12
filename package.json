@@ -18,30 +18,17 @@
     "email": "penpendede@mail.ru"
   },
   "license": "BSD-2-Clause",
-  "devDependencies": {
-    "font-awesome": "^4.7.0",
-    "fs-extra": "^4.0.1",
-    "guide4you-proxy": "github:KlausBenndorf/guide4you-proxy",
-    "jsftp": "^2.0.0",
-    "leaflet": "^1.2.0",
-    "leaflet-dialog": "^1.0.1",
-    "leaflet-easybutton": "^2.2.2",
-    "leaflet.markercluster": "^1.1.0",
-    "mustache": "^2.3.0",
-    "papaparse": "^4.3.5",
-    "standard": "^10.0.3"
-  },
   "scripts": {
-    "publish": "npm run setup && npm run makeWebsite",
-    "setup": "npm run fetchData && npm run processData",
-    "fetchData": "npm run getAirportList && npm run getAdditionalData",
-    "getAdditionalData": "npm run getCountries && npm run getIcaoWithMetarAvailable",
-    "getAirportList": "npm run getAirportListFromOpenFlights && npm run getAirportListFromOurAirports",
+    "publish": "yarn run setup && yarn run makeWebsite",
+    "setup": "yarn run fetchData && yarn run processData",
+    "fetchData": "yarn run getAirportList && yarn run getAdditionalData",
+    "getAdditionalData": "yarn run getCountries && yarn run getIcaoWithMetarAvailable",
+    "getAirportList": "yarn run getAirportListFromOpenFlights && yarn run getAirportListFromOurAirports",
     "getAirportListFromOpenFlights": "node ./scripts/getAirportListFromOpenFlights.js",
     "getAirportListFromOurAirports": "node ./scripts/getAirportListFromOurAirports.js",
     "getCountries": "node ./scripts/getCountries.js",
     "getIcaoWithMetarAvailable": "node ./scripts/getIcaoWithMetarAvailable.js",
-    "makeWebsite": "npm run configureProxy && npm run assembleWebsite",
+    "makeWebsite": "yarn run configureProxy && yarn run assembleWebsite",
     "configureProxy": "node ./scripts/configureProxy.js",
     "assembleWebsite": "node ./scripts/copyFilesToWebDirectory.js",
     "processData": "node ./scripts/extractSupportedAirports.js"
@@ -55,5 +42,19 @@
       "email": "penpendede@mail.ru"
     }
   ],
-  "dependencies": {}
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "fs-extra": "^9.0.1",
+    "guide4you-proxy": "https://github.com/KlausBenndorf/guide4you-proxy.git",
+    "jsftp": "^2.1.3",
+    "leaflet": "^1.7.1",
+    "leaflet-dialog": "^1.0.5",
+    "leaflet-easybutton": "^2.4.0",
+    "leaflet.fullscreen": "^1.6.0",
+    "leaflet.markercluster": "^1.4.1",
+    "leaflet.tilelayer.colorfilter": "^1.2.5",
+    "mustache": "^4.0.1",
+    "papaparse": "^5.3.0",
+    "standard": "^14.3.4"
+  }
 }

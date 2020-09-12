@@ -6,33 +6,42 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="./css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/fontawesome.min.css"/>
+    <link rel="stylesheet" href="css/regular.min.css"/>
+    <link rel="stylesheet" href="css/solid.min.css"/>
+
     <link rel="stylesheet" href="./css/leaflet.css"/>
     <link rel="stylesheet" href="./css/MarkerCluster.css" />
     <link rel="stylesheet" href="./css/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="./css/Control.FullScreen.css" />
     <link rel="stylesheet" href="./css/easy-button.css" />
     <link rel="stylesheet" href="./css/Leaflet.Dialog.css" />
     <link rel="stylesheet" href="./css/airportWeather.css" />
 
     <script src="./js/leaflet.js"></script>
     <script src="./js/leaflet.markercluster.js"></script>
+    <script src="./js/Control.FullScreen.js"></script>
+    <script src="./js/leaflet-tilelayer-colorfilter.min.js"></script>
     <script src="./js/easy-button.js"></script>
     <script src="./js/Leaflet.Dialog.js"></script>
     <script src="./js/MetarParser.js"></script>
+
 </head>
 <body>
 <div id="map" style="display: block; width: 100%; height: 100%;"></div>
 
 <script>
     var baseUrl = './proxy.php?csurl=http%3A%2F%2Ftgftp.nws.noaa.gov%2Fdata%2Fobservations%2Fmetar%2Fstations%2F';
-    var map = L.map('map').setView([50.865833, 7.142778], 8);
+    var map = L.map('map', {
+      fullscreenControl: true
+    }).setView([50.865833, 7.142778], 8);
 
     var info = L.control.dialog({'initOpen': false})
       .setContent(
@@ -50,17 +59,21 @@
         "It is an open source project, find it on " +
         "<a href='https://github.com/penpendede/airportWeather' target='_blank'>github.com</a>." +
         "<p>" +
-        "The underlying map is " +
-        "<a href='https://www.arcgis.com/home/item.html?id=30e5fe3149c34df1ba922e6f5bbf808f' target='_blank'>" +
-        "World Topographic Map</a>." +
+        "The underlying map is just the <a href='https://osm.org/' target='_blank'>the ordinary OSM map</a> - " +
+        "with some CSS color filtering applied to it." +
         "</p>"
       )
       .addTo(map);
 
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+    L.tileLayer.colorFilter('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+	    maxZoom: 18,
+	    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      filter: [
+        'blur:0.5px',
+        'contrast:70%',
+        'saturate:50%'
+      ]
     }).addTo(map);
-
 
     L.easyButton('<img src="images/info.svg" style="vertical-align: middle;">', function(btn, map){
       if (info.getElement().style.visibility === "hidden") {
