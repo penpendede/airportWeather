@@ -52,6 +52,7 @@
     "leaflet-easybutton": "^2.4.0",
     "leaflet.fullscreen": "^1.6.0",
     "leaflet.markercluster": "^1.4.1",
+    "leaflet.tilelayer.colorfilter": "^1.2.5",
     "mustache": "^4.0.1",
     "papaparse": "^5.3.0",
     "standard": "^14.3.4"

@@ -28,6 +28,7 @@
     <script src="./js/leaflet.js"></script>
     <script src="./js/leaflet.markercluster.js"></script>
     <script src="./js/Control.FullScreen.js"></script>
+    <script src="./js/leaflet-tilelayer-colorfilter.min.js"></script>
     <script src="./js/easy-button.js"></script>
     <script src="./js/Leaflet.Dialog.js"></script>
     <script src="./js/MetarParser.js"></script>
@@ -58,17 +59,21 @@
         "It is an open source project, find it on " +
         "<a href='https://github.com/penpendede/airportWeather' target='_blank'>github.com</a>." +
         "<p>" +
-        "The underlying map is " +
-        "<a href='https://www.arcgis.com/home/item.html?id=30e5fe3149c34df1ba922e6f5bbf808f' target='_blank'>" +
-        "World Topographic Map</a>." +
+        "The underlying map is just the <a href='https://osm.org/' target='_blank'>the ordinary OSM map</a> - " +
+        "with some CSS color filtering applied to it." +
         "</p>"
       )
       .addTo(map);
 
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+    L.tileLayer.colorFilter('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+	    maxZoom: 18,
+	    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      filter: [
+        'blur:0.5px',
+        'contrast:70%',
+        'saturate:50%'
+      ]
     }).addTo(map);
-
 
     L.easyButton('<img src="images/info.svg" style="vertical-align: middle;">', function(btn, map){
       if (info.getElement().style.visibility === "hidden") {
